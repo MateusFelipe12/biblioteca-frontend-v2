@@ -55,79 +55,77 @@
 </template>
 
 <script>
-export default {
-  name: 'ConsultaLivrosPage',
-  data () {
-    return {
-      headers: [
-        {
-          text: 'Código', 
-          align: 'center', 
-          sortable: false, 
-          value: 'id',
-        },
-        {
-          text: 'Titulo',
-          align: 'center',
-          sortable: false,
-          value: 'titulo',
-        },  
-        {
-          text: 'Sinopse',
-          align: 'center',
-          sortable: false,
-          value: 'sinopse'
-        },
-        {
-          text: 'Autor', 
-          align: 'center', 
-          sortable: false, 
-          value: 'idAutor',
-        },  
-        {
-          text: 'Categoria', 
-          align: 'center', 
-          sortable: false, 
-          value: 'idCategoria',
-        },  
-        {
-          text: 'Emprestado', 
-          align: 'center', 
-          sortable: false, 
-          value: 'emprestado',
-        },
-        { text: "", value: "actions" },
-      ],
-      livros: []
-    }
-  },
-  created () {
-    this.getLivros ()
-  },
-  methods: {
-    async getLivros () {
-     try {
-        let livros = await this.$axios.$get('http://localhost:3333/livros');
-        this.livros = livros.data.livros
-     } catch (error) {
-      this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
-     }
-    },
+// export default {
+//   name: 'ConsultaLivrosPage',
+//   data () {
+//     return {
+//       headers: [
+//         {
+//           text: 'Código', 
+//           align: 'center', 
+//           sortable: false, 
+//           value: 'id',
+//         },
+//         {
+//           text: 'Titulo',
+//           align: 'center',
+//           sortable: false,
+//           value: 'titulo'
+//         },
+//         {
+//           text: 'Sinopse',
+//           align: 'center',
+//           sortable: false,
+//           value: 'sinopse'
+//         },
+//         {
+//           text: 'Autor', 
+//           align: 'center', 
+//           sortable: false, 
+//           value: 'idAutor',
+//         },  
+//         {
+//           text: 'Categoria', 
+//           align: 'center', 
+//           sortable: false, 
+//           value: 'idCategoria',
+//         },  
+//         {
+//           text: 'Emprestado', 
+//           align: 'center', 
+//           sortable: false, 
+//           value: 'emprestado',
+//         },
+//         { text: "", value: "actions" },
+//       ],
+//       livros: []
+//     }
+//   },
+//   created () {
+//     this.getLivros ()
+//   },
+//   methods: {
+//     async getLivros () {
+//      try {
+//         let livros = await this.$axios.$get('http://localhost:3333/livros');
+//         this.livros = livros.data.livros
+//      } catch (error) {
+//       this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
+//      }
+//     },
 
-    async deletar (livros) {
-      if (confirm(`Deseja deletar o livro id ${livros.id} - ${livros.titulo}?`)) {
-        let response = await this.$axios.$post('http://localhost:3333/livros/deletar', { id: livros.id });
-        this.$toast(response.message)
-        this.getLivros();
-      }
-     },
-    async update (livro) {
-      this.$router.push({
-        name: 'livros-cadastro',
-        params: { id: livro.id }
-      });
-    },
-    async emprestado ()
-  }
-}
+//     async deletar (livros) {
+//       if (confirm(`Deseja deletar o livro id ${livros.id} - ${livros.titulo}?`)) {
+//         let response = await this.$axios.$post('http://localhost:3333/livros/deletar', { id: livros.id });
+//         this.$toast(response.message)
+//         this.getLivros();
+//       }
+//      },
+//     async update (livro) {
+//       this.$router.push({
+//         name: 'livros-cadastro',
+//         params: { id: livro.id }
+//       });
+//     }
+// }
 </script>

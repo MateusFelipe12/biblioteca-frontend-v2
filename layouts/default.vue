@@ -121,6 +121,11 @@ export default {
           icon: 'mdi-account',
           title: 'Usuários',
           to: '/usuarios'
+        },
+        {
+          icon: 'mdi-calculator',
+          title: 'Calculadora CRS',
+          to: '/calculadora'
         }
       ],
       miniVariant: false,
