@@ -123,10 +123,15 @@ export default {
           to: '/usuarios'
         },
         {
+          icon: 'mdi-calendar',
+          title: 'Emprestimos',
+          to: '/emprestimo'
+        },
+        {
           icon: 'mdi-calculator',
           title: 'Calculadora CRS',
           to: '/calculadora'
-        }
+        },
       ],
       miniVariant: false,
       right: true,

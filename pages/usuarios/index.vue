@@ -9,7 +9,7 @@
           <v-btn
             outlined
             color="success"
-            @click="getUsarios"
+            @click="getUsarios()"
           >
             Pesquisar
           </v-btn>
@@ -29,7 +29,6 @@
       <v-data-table
         :headers="headers"
         :items="usuarios"
-        :items-per-page="all"
         class="elevation-1"
       >
         <template v-slot:item.actions="{ item }">

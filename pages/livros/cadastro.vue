@@ -55,8 +55,6 @@
               style="margin-right:15px"
             ></v-autocomplete>
           </v-col>
-        
-       
              <v-col
             cols="3"
           >
@@ -140,7 +138,7 @@ export default {
         this.$toast.success('Cadastro atualizado com sucesso!');
         return this.$router.push('/livros');
       } catch (error) {
-          his.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
+          this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
       }
     },
     async getAutores () {

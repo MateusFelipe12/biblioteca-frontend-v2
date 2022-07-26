@@ -29,7 +29,6 @@
       <v-data-table
         :headers="headers"
         :items="autores"
-        :items-per-page="all"
         class="elevation-1"
       >
        <template v-slot:item.actions="{ item }">
