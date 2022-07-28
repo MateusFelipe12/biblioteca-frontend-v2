@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <h1>Empretimo id {{emprestimos.id}}</h1>
-    <v-template>
+    <h1>Emprestimo id {{emprestimos.id}}</h1>
+    <template>
       <v-row>
         <v-col>
           <v-text-field
@@ -49,7 +49,7 @@
           </v-data-table>
         </v-container>
       </v-row>
-    </v-template>
+    </template>
   </v-container>
 </template>
 
@@ -85,7 +85,6 @@ methods:{
     try {
       this.emprestimos = await this.$axios.$get(`http://localhost:3333/emprestimo/${idEmprestimo}`)
       this.emprestimos.devolucao  = this.emprestimos.devolucao ? this.emprestimos.devolucao : "Emprestado"
-      console.log(this.emprestimos);
     } catch (error) {
       this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
     }

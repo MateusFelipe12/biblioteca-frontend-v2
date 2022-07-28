@@ -112,10 +112,13 @@ export default {
       }
      },
        async update (usuario) {
-      this.$router.push({
-        name: 'usuarios-cadastro',
-        params: { id: usuario.id }
-      });
+        try {
+          this.$router.push({
+          name: 'usuarios-cadastro',
+          params: { id: usuario.id }});
+        } catch (error) {
+           this.$toast.error(`Ocorreu um erro ao deletar, contate o administrador`);
+        }
     }
   }
 }

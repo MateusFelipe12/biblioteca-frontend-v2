@@ -117,26 +117,35 @@ export default {
   },
   methods: {
     async getLivros () {
-     try {
+      try {
         let livros = await this.$axios.$get('http://localhost:3333/livros');
         this.livros = livros.data.livros
-     } catch (error) {
-      this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
-     }
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
+      }
     },
 
     async deletar (livros) {
-      if (confirm(`Deseja deletar o livro id ${livros.id} - ${livros.titulo}?`)) {
-        let response = await this.$axios.$post('http://localhost:3333/livros/deletar', { id: livros.id });
-        this.$toast(response.message)
-        this.getLivros();
+      try {
+        if (confirm(`Deseja deletar o livro id ${livros.id} - ${livros.titulo}?`)) {
+          let response = await this.$axios.$post('http://localhost:3333/livros/deletar', { id: livros.id });
+          this.$toast(response.message)
+          this.getLivros();
+       }
+      } catch (error) {
+         this.$toast.error(`Ocorreu um erro ao deletar o livro id ${livros.id}, contate o administrador`)
       }
      },
+
     async update (livro) {
-      this.$router.push({
-        name: 'livros-cadastro',
-        params: { id: livro.id }
-      });
+      try {
+        this.$router.push({
+          name: 'livros-cadastro',
+          params: { id: livro.id }
+        });
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao acessar a pagina de atualizar, contate o administrador`)
+      }
     }
   }
 }

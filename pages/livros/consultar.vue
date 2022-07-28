@@ -75,25 +75,25 @@ export default {
   },
   methods: {
     async livroEmprestado (idLivro) {
-    try {
-      this.livros = []
-      let livro = await this.$axios.$post('http://localhost:3333/emprestimos/livro', {idLivro: idLivro})
-      if(this.search){
-        if(livro.error) {
-          this.$toast.error(livro.message)
-        }
-        else{
-          if(livro.data){
-            livro.data.devolucao = 'Emprestado'
-            this.livros.push(livro.data)
-          } else{ 
-              this.$toast(`o livro id ${idLivro} nao esta alocado em nenhum emprestimo`)
+      try {
+        this.livros = []
+        let livro = await this.$axios.$post('http://localhost:3333/emprestimos/livro', {idLivro: idLivro})
+        if(this.search){
+          if(livro.error) {
+            this.$toast.error(livro.message)
           }
-        }
-      } else{ this.$toast.error(`Preencha o campo de pesquisa`) }
-    } catch (error) {
-      this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
-    }
+          else{
+            if(livro.data){
+              livro.data.devolucao = 'Emprestado'
+              this.livros.push(livro.data)
+            } else{ 
+                this.$toast(`o livro id ${idLivro} nao esta alocado em nenhum emprestimo`)
+            }
+          }
+        } else{ this.$toast.error(`Preencha o campo de pesquisa`) }
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
+      }
     }
   }
 }

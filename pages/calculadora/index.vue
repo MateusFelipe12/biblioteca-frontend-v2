@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-text>
+    <text>
       <h1 style="margin-left:25%">Calculadora do CRS</h1>
-    </v-text>
+    </text>
     <v-container style="width:400px; margin-right: 450px; margin-top:70px">
       <v-form style="">
         <v-row>
@@ -162,7 +162,6 @@ export default {
           this.i++;
           this.numeros.push(aux)
           this.i++
-          console.log(this.numeros);
         }
         this.numeros.push(digito)
         this.visor = this.numeros.join('')

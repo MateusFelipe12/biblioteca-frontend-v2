@@ -72,7 +72,8 @@ export default {
       },
       rule: [
         v => !!v || `Campo obrigatorio`
-      ]
+      ],
+      valid: false,
     }
   },
   created () {

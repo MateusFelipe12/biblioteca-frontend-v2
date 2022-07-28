@@ -10,23 +10,15 @@
           label="Search"
           placeholder="codigo"
           class="mx-3"
-          :rules="rule"
         />
         </v-col>
         <v-col cols="2">
-          <v-btn
-            outlined
-            color="grey"
-            @click="getEmprestimo(search)"
-          >
-            Pesquisar
-          </v-btn>
         </v-col>
         <v-col>
           <v-btn
            outlined
-          color="blue"
-         
+            color="blue"
+            @click="cadastrar"
           >
             Cadastrar
           </v-btn>
@@ -37,13 +29,15 @@
       <v-data-table
         :headers="headers"
         :items="emprestimo"
+         item-key="id"
+        :search="search"
       >
     <template v-slot:item.actions="{ item }">
         <v-icon
           small
           class="mr-2"
           color="yellow"
-          @click="update(item)"
+          @click="consulta(item)"
         >
           mdi-magnify
         </v-icon>
@@ -55,11 +49,13 @@
           mdi-delete
         </v-icon>
         <v-btn
+          v-if="!item.devolucao"
           small
           class="mr-2"
           outlined
           color="red"
           @click="encerrar(item)"
+          style="margin-left: 30px"
         >
           Encerrar
         </v-btn>
@@ -104,9 +100,6 @@ export default {
         },
         { text: "", value: "actions" },
       ],
-      rule: [
-        v => !!v || `Campo obrigatorio`
-      ]
     }
    
   },
@@ -114,37 +107,52 @@ export default {
     this.getEmprestimo()
   },
   methods: {
-    async getEmprestimo (idEmprestimo) {
-    try {
-      let emprestimos = await this.$axios.$get(`http://localhost:3333/emprestimo`)
-      console.log(emprestimos[0]);
-      this.emprestimo = emprestimos
-    } catch (error) {
-      this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
-    }
+    async getEmprestimo () {
+      try {
+        let emprestimos = await this.$axios.$get(`http://localhost:3333/emprestimo`)
+        this.emprestimo = emprestimos
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
+      }
     },
      async deletar (item) {
       try {
         if (confirm(`Deseja deletar o emprestimo id ${item.id}?`)) {
           let response = await this.$axios.$post('http://localhost:3333/emprestimo/deletar', { id: item.id });
           this.$toast(response.message)
+          this.getEmprestimo()
         } 
       } catch (error) {
         this.$toast.error(`Ocorreu um erro ao deletar, contate o administrador`);
       }
      },
-    async update (item) {
-      this.$router.push({
-        name: 'emprestimo-update',
-        params: { id: item.id }
-      });
+    async consulta (item) {
+      try {
+        this.$router.push({
+          name: 'emprestimo-consulta',
+          params: { id: item.id }
+        });
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao consultar o emprestimo, contate o administrador`);
+      }
     },
     async encerrar (item) {
-      let emprestimo = {
-        devolucao: new Date(Date.now()).toISOString().substring(0,10)
+     try {
+        let emprestimo = {
+          devolucao: new Date(Date.now()).toISOString().substring(0,10)
+        }
+        let response = await this.$axios.$post(`http://localhost:3333/emprestimo/${item.id }`, {devolucao: emprestimo.devolucao});
+        this.getEmprestimo()
+     } catch (error) {
+      this.$toast.error(`Ocorreu um erro ao encerrar o emprestimo, contate o administrador`);
+     }
+    },
+    async cadastrar () {
+      try {
+        this.$router.push({ name: 'emprestimo-cadastro' });
+      } catch (error) {
+         this.$toast.error(`Ocorreu um erro ao carregar a pagina de cadastro, contate o administrador`);
       }
-      let response = await this.$axios.$post(`http://localhost:3333/emprestimo/${item.id }`, {devolucao: emprestimo.devolucao});
-      this.getEmprestimo()
     }
   }
 }

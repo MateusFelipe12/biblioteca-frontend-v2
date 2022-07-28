@@ -98,7 +98,8 @@ export default {
       },
       rule: [
         v => !!v || `Campo obrigatorio`
-      ]
+      ],
+      valid: false,
     }
   },
 
@@ -138,8 +139,12 @@ created () {
       }
     },
     async getById (id) {
-      let usuario = await this.$axios.$get(`http://localhost:3333/usuarios/${id}`);
-      this.usuario = usuario.data.usuario
+      try {
+        let usuario = await this.$axios.$get(`http://localhost:3333/usuarios/${id}`);
+        this.usuario = usuario.data.usuario
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao realizar a edicao, contate o administrador`)
+      }
     }
   }
 }

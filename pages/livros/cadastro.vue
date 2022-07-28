@@ -5,9 +5,7 @@
     <v-form v-model="valid">
       <v-container>
         <v-row no-gutters>
-          <v-col
-            cols="3"
-          >
+          <v-col cols="3">
             <v-text-field
               v-model="livro.id"
               placeholder="Código"
@@ -18,8 +16,7 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col 
-          cols="7">
+          <v-col cols="7">
             <v-text-field
               v-model="livro.titulo"
               placeholder="titulo"
@@ -30,8 +27,7 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col 
-          cols="7">
+          <v-col cols="7">
             <v-text-field
               v-model="livro.sinopse"
               placeholder="Sinopse"
@@ -42,9 +38,7 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col
-             cols="4"
-          >
+          <v-col cols="4">
             <v-autocomplete
               v-model="livro.idAutor"
               :items="autores"
@@ -55,9 +49,7 @@
               style="margin-right:15px"
             ></v-autocomplete>
           </v-col>
-             <v-col
-            cols="3"
-          >
+          <v-col cols="3">
             <v-autocomplete
               v-model="livro.idCategoria"
               :items="categorias"
@@ -115,7 +107,6 @@ export default {
   methods: {
     async persistir () {
       try {
-
         if(!this.valid){
           return this.$toast.warning('O formulário de cadastro não é válido!')
         }
@@ -136,21 +127,35 @@ export default {
         livro.id = this.livro.id
         await this.$axios.$post(`http://localhost:3333/livros`, livro);
         this.$toast.success('Cadastro atualizado com sucesso!');
+
         return this.$router.push('/livros');
+        
       } catch (error) {
           this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)
       }
     },
     async getAutores () {
-      let autores = await this.$axios.$get('http://localhost:3333/autores');
-      this.autores = autores.data.autores
+      try {
+        let autores = await this.$axios.$get('http://localhost:3333/autores');
+        this.autores = autores.data.autores
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
+      }
     },
     async getCategorias () {
+     try {
       this.categorias = await this.$axios.$get('http://localhost:3333/categorias');
+     } catch (error) {
+      this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
+     }
     },
     async getById (id) {
-      let livro = await this.$axios.$get(`http://localhost:3333/livros/${id}`);
-      this.livro = livro.data.livro
+      try {
+        let livro = await this.$axios.$get(`http://localhost:3333/livros/${id}`);
+        this.livro = livro.data.livro 
+      } catch (error) {
+        this.$toast.error(`Ocorreu um erro ao carregar a pagina, contate o administrador`)
+      }
     }
   }
 }
